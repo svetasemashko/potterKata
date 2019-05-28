@@ -18,7 +18,7 @@ class BaseControllerTest extends TestCase
     {
         $bookStore = new BookStore();
 
-        $price = $bookStore->countDiscountPriceBooks(3);
+        $price = $bookStore->countDiscountBooks(3);
         $this->assertEquals(8*3*0.9, $price);
     }
 }

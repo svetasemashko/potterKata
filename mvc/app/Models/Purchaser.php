@@ -1,48 +1,35 @@
 <?php
 namespace app\Models;
 
-use \app\Models\BookStore;
-
 class Purchaser {
 
-    public $bookStore;
+    private $bookStore;
 
-    public $bookPrice = 8;
+    private $numberOfDiscountBooks;
 
-    public $numberOfBooks = [
-        [
-            'number' => 2,
-            'discount' => 0.95
-        ],
-        [
-            'number' => 3,
-            'discount' => 0.9
-        ]
-    ];
+    private $bookCopies = 0;
 
     public function __construct(BookStore $bookStore)
     {
         $this->bookStore = $bookStore;
     }
 
-    public function getPrice($numberOfFullPriceBooks, $numberOfDiscountBooks)
+    private function getPrice()
     {
-        return $this->bookStore->countBasketPrice($numberOfFullPriceBooks, $numberOfDiscountBooks);
+        $discountBooks = $this->bookStore->countDiscountBooks($this->numberOfDiscountBooks);
+        $fullPriceBooks = $this->bookStore->countFullPriceBooks($this->bookCopies);
+
+        return $discountBooks + $fullPriceBooks;
     }
 
     public function getBooks(array $books)
     {
-        $numberOfDiscountBooks = count($books);
-
-        $discountBooks = $this->bookStore->countDiscountPriceBooks($numberOfDiscountBooks);
-
-        $copies = 0;
+        $this->numberOfDiscountBooks = count($books);
 
         foreach ($books as $book) {
-            $copies = $copies + $book['copies'] - 1;
-
+                $this->bookCopies = $this->bookCopies + $book['copies'] - 1;
         }
-        $fullPriceBooks = $this->bookStore->countFullPriceBooks($copies);
-        return $discountBooks + $fullPriceBooks;
+
+        return $this->getPrice();
     }
 }
