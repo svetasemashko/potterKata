@@ -19,7 +19,20 @@ class PurchaserTest extends TestCase
     {
         $bookStore = new BookStore();
         $purchaser = new Purchaser($bookStore);
-        $purchaser->getBooks(1, 3);
-        $purchaser->getBooks(2, 4);
+        $price = $purchaser->getBooks([
+            [
+                'id' => 1,
+                'copies' => 30
+            ],
+            [
+                'id' => 2,
+                'copies' => 2
+            ],
+            [
+                'id' => 2,
+                'copies' => 5
+            ],
+        ]);
+        $this->assertEquals(8*3*0.9+(29+1+4)*8, $price);
     }
 }

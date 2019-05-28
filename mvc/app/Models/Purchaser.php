@@ -7,6 +7,19 @@ class Purchaser {
 
     public $bookStore;
 
+    public $bookPrice = 8;
+
+    public $numberOfBooks = [
+        [
+            'number' => 2,
+            'discount' => 0.95
+        ],
+        [
+            'number' => 3,
+            'discount' => 0.9
+        ]
+    ];
+
     public function __construct(BookStore $bookStore)
     {
         $this->bookStore = $bookStore;
@@ -17,8 +30,19 @@ class Purchaser {
         return $this->bookStore->countBasketPrice($numberOfFullPriceBooks, $numberOfDiscountBooks);
     }
 
-    public function getBooks($bookId, $copy)
+    public function getBooks(array $books)
     {
-        //
+        $numberOfDiscountBooks = count($books);
+
+        $discountBooks = $this->bookStore->countDiscountPriceBooks($numberOfDiscountBooks);
+
+        $copies = 0;
+
+        foreach ($books as $book) {
+            $copies = $copies + $book['copies'] - 1;
+
+        }
+        $fullPriceBooks = $this->bookStore->countFullPriceBooks($copies);
+        return $discountBooks + $fullPriceBooks;
     }
 }
