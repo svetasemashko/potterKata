@@ -16,7 +16,6 @@ class BaseControllerTest extends TestCase
         $result = ob_get_contents();
         ob_end_clean();
 
-        $this->assertEquals('<p>MVC Model</p>', $result);
+        $this->assertEquals('<p>MVC Models</p>', $result);
     }
-
 }
