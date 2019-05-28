@@ -6,11 +6,19 @@ use PHPUnit\Framework\TestCase;
 
 class BaseControllerTest extends TestCase
 {
-    public function testCountNumberFullPriceBooks()
+    public function testCountFullPriceBooks()
     {
         $bookStore = new BookStore();
 
-        $price = $bookStore->countNumberFullPriceBooks(2);
-        $this->assertEquals(16, $price);
+        $price = $bookStore->countFullPriceBooks(2);
+        $this->assertEquals(8*2, $price);
+    }
+
+    public function testCountDiscountPriceBooks()
+    {
+        $bookStore = new BookStore();
+
+        $price = $bookStore->countDiscountPriceBooks(3);
+        $this->assertEquals(8*3*0.9, $price);
     }
 }

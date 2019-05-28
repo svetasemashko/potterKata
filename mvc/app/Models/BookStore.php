@@ -16,24 +16,32 @@ class BookStore
         ]
     ];
 
-    public function countNumberFullPriceBooks($numberOfFullPriceBooks)
+    public $numberOfFullPriceBooks;
+
+    public $numberOfDiscountPriceBooks;
+
+    public function countFullPriceBooks($numberOfFullPriceBooks)
     {
-        $numberOfBooks['number'] = $numberOfFullPriceBooks;
-        return $this->bookPrice * $numberOfBooks['number'];
+        return $this->bookPrice * $numberOfFullPriceBooks;
     }
 
-//    public function countDiscountPriceBooks()
-//    {
-//        return $discountPriceBooks * $numberOfBooks['number'] * $numberOfBooks['discount'];
-//    }
-//
-//    public function countBasketPrice()
-//    {
-//        $fullAmount = $this->countNumberFullPriceBooks();
-//        $reducedAmount = $this->countDiscountPriceBooks();
-//
-//        $finalPrice = $fullAmount + $reducedAmount;
-//
-//        return $finalPrice;
-//    }
+    public function countDiscountPriceBooks($numberOfDiscountPriceBooks)
+    {
+        foreach ($this->numberOfBooks as $number) {
+
+            if ($number['number'] == $numberOfDiscountPriceBooks) {
+                return $this->bookPrice * $number['number'] * $number['discount'];
+            };
+        }
+    }
+
+    public function countBasketPrice($numberOfFullPriceBooks, $numberOfDiscountPriceBooks)
+    {
+        $fullAmount = $this->countFullPriceBooks($numberOfFullPriceBooks);
+        $reducedAmount = $this->countDiscountPriceBooks($numberOfDiscountPriceBooks);
+
+        $finalPrice = $fullAmount + $reducedAmount;
+
+        return $finalPrice;
+    }
 }
