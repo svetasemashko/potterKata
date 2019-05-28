@@ -1,0 +1,12 @@
+{
+  "name": "root/app",
+  "require": {
+    "phpunit/phpunit": "^8.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "app\\": "app/",
+      "Tests\\": "tests/"
+    }
+  }
+}
