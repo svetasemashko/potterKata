@@ -16,4 +16,9 @@ class Purchaser {
     {
         return $this->bookStore->countBasketPrice($numberOfFullPriceBooks, $numberOfDiscountBooks);
     }
+
+    public function getBooks($bookId, $copy)
+    {
+        //
+    }
 }
